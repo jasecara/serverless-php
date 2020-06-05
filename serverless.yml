@@ -1,0 +1,25 @@
+service:
+  name: serverless-php
+provider:
+  name: aws
+  stage: ${opt:stage,'dev'}
+  runtime: provided
+  region: us-east-1
+  stackName: serverless-php-${self:provider.stage}
+
+plugins:
+  - ./vendor/bref/bref
+
+functions:
+  function:
+    handler: index.php
+    layers:
+      - ${bref:layer.php-73-fpm}
+    events:
+      - http: 'ANY /'
+      - http: 'ANY /{proxy+}'
+
+# Exclude files from deployment
+package:
+  exclude:
+    - 'tests/**'
