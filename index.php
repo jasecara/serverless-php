@@ -2,4 +2,4 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-echo "Hello Lambda World!";
+echo "Hello PHP Lambda World!";
