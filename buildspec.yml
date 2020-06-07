@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 7.3
+      nodejs: 12
+    commands:
+      - curl -s https://getcomposer.org/installer | php
+      - mv composer.phar /usr/local/bin/composer
+      - php --version
+      - npm install --silent --no-progress -g serverless
+  pre_build:
+    commands:
+      - composer install
+      - npm install --silent --no-progress
+  build:
+    commands:
+      - mkdir -p target/dev
+      - serverless package --package target/dev --stage dev -v
+artifacts:
+  files:
+    - target/**/*
+    - serverless.yml
+    - deploy.sh
